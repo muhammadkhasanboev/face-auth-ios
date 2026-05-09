@@ -15,6 +15,7 @@ enum SDKConfig {
         -----END PUBLIC KEY-----
         """,
         rpId: "signing.tadi.uz",
-        serviceName: "tad-signing-demo"
+        serviceName: "tad-signing-demo",
+        blockProxy: true
     )
 }
