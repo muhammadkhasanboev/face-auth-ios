@@ -1,0 +1,42 @@
+name: TadSigningDemo
+options:
+  bundleIdPrefix: uz.tad
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "16.0"
+
+packages:
+  TadSigningSDK:
+    path: /Users/muhammad/Documents/Git/tad-core-signing-app/apps/tad-core-signing-ios
+
+targets:
+  TadSigningDemo:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - TadSigningDemo
+    dependencies:
+      - package: TadSigningSDK
+        product: TadSigningSDK
+    entitlements:
+      path: TadSigningDemo/TadSigningDemo.entitlements
+      properties:
+        com.apple.developer.associated-domains:
+          - webcredentials:signing.tadi.uz
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: uz.tad.TadSigningDemo
+        SWIFT_VERSION: "5.9"
+        ENABLE_BITCODE: NO
+        ALWAYS_SEARCH_USER_PATHS: NO
+        CLANG_ENABLE_MODULES: YES
+        SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+    info:
+      path: TadSigningDemo/Info.plist
+      properties:
+        UILaunchScreen:
+          UIColorName: ""
+        NSCameraUsageDescription: "Required for face liveness check during biometric sign-in"
+        NSFaceIDUsageDescription: "Used to secure your Passkey during registration and sign-in"
+        ITSAppUsesNonExemptEncryption: false

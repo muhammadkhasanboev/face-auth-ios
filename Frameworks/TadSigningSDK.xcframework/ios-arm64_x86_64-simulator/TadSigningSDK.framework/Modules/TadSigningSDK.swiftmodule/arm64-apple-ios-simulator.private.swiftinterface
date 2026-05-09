@@ -1,0 +1,109 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.1 effective-5.10 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)
+// swift-module-flags: -target arm64-apple-ios16.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature StrictConcurrency -enable-experimental-feature DebugDescriptionMacro -module-name TadSigningSDK -package-name tad_core_signing_ios
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.1
+import AVFoundation
+import AuthenticationServices
+import CFNetwork
+import CoreImage
+import CoreVideo
+import CryptoKit
+import DeviceCheck
+import Foundation
+import Foundation/*.Bundle*/
+import Foundation/*.ProcessInfo*/
+import Foundation/*.URL*/
+import OnnxRuntimeBindings
+import Security
+import Swift
+import TadSigningSDKC
+import UIKit
+import Vision
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import os.log
+import os
+final public class TadSigningClient {
+  public init(config: TadSigningSDK.TadSigningConfig)
+  final public func register(presenting viewController: UIKit.UIViewController, bankId: Swift.String, onInstruction: @escaping (TadSigningSDK.LivenessInstruction) -> Swift.Void = { _ in }, completion: @escaping (TadSigningSDK.TadSigningResult) -> Swift.Void)
+  final public func register(presenting viewController: UIKit.UIViewController, bankId: Swift.String, onInstruction: @escaping (TadSigningSDK.LivenessInstruction) -> Swift.Void = { _ in }) async -> TadSigningSDK.TadSigningResult
+  final public func sign(presenting viewController: UIKit.UIViewController, bankId: Swift.String, dto: [Swift.String : Swift.String], onInstruction: @escaping (TadSigningSDK.LivenessInstruction) -> Swift.Void = { _ in }, completion: @escaping (TadSigningSDK.TadSigningResult) -> Swift.Void)
+  final public func sign(presenting viewController: UIKit.UIViewController, bankId: Swift.String, dto: [Swift.String : Swift.String], onInstruction: @escaping (TadSigningSDK.LivenessInstruction) -> Swift.Void = { _ in }) async -> TadSigningSDK.TadSigningResult
+  final public func clearSession()
+  final public func hasRegistration() -> Swift.Bool
+  @objc deinit
+}
+public struct TadSigningConfig {
+  public let apiBaseUrl: Foundation.URL
+  public let publicKeyPem: Swift.String
+  public let rpId: Swift.String
+  public let serviceName: Swift.String
+  public var blockProxy: Swift.Bool
+  public let pinnedCertificateSHA256: Swift.String?
+  public init(apiBaseUrl: Foundation.URL, publicKeyPem: Swift.String, rpId: Swift.String, serviceName: Swift.String, blockProxy: Swift.Bool = false, pinnedCertificateSHA256: Swift.String? = nil)
+}
+public enum TadSigningResult {
+  case success(jwt: Swift.String, requestId: Swift.String)
+  case failure(TadSigningSDK.TadErrorCode, Swift.String)
+}
+public enum TadErrorCode : Swift.String, Swift.Error {
+  case jailbreakDetected
+  case fridaDetected
+  case debuggerDetected
+  case emulatorDetected
+  case screenRecording
+  case livenessTimeout
+  case livenessFailed
+  case faceNotCentered
+  case appAttestFailed
+  case networkError
+  case signatureInvalid
+  case certificatePinningFail
+  case serverError
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum LivenessInstruction {
+  case lookAtCamera
+  case moveBack
+  case blink
+  case holdStill
+  public static func == (a: TadSigningSDK.LivenessInstruction, b: TadSigningSDK.LivenessInstruction) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency final public class TadCameraView : UIKit.UIView {
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor @preconcurrency @objc override final public func layoutSubviews()
+  @_Concurrency.MainActor @preconcurrency @objc override final public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+  @objc deinit
+}
+public enum TadSigningMode {
+  case register
+  case sign
+  public static func == (a: TadSigningSDK.TadSigningMode, b: TadSigningSDK.TadSigningMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency final public class TadSigningViewController : UIKit.UIViewController {
+  @_Concurrency.MainActor @preconcurrency public init(config: TadSigningSDK.TadSigningConfig, bankId: Swift.String, dto: [Swift.String : Swift.String] = [:], mode: TadSigningSDK.TadSigningMode = .sign, completion: @escaping (TadSigningSDK.TadSigningResult) -> Swift.Void)
+  @_Concurrency.MainActor @preconcurrency @objc override final public func viewDidLoad()
+  @_Concurrency.MainActor @preconcurrency @objc override final public func viewDidAppear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor @preconcurrency @objc override final public func viewDidDisappear(_ animated: Swift.Bool)
+  @objc deinit
+}
+extension TadSigningSDK.TadErrorCode : Swift.Equatable {}
+extension TadSigningSDK.TadErrorCode : Swift.Hashable {}
+extension TadSigningSDK.TadErrorCode : Swift.RawRepresentable {}
+extension TadSigningSDK.LivenessInstruction : Swift.Equatable {}
+extension TadSigningSDK.LivenessInstruction : Swift.Hashable {}
+extension TadSigningSDK.TadSigningMode : Swift.Equatable {}
+extension TadSigningSDK.TadSigningMode : Swift.Hashable {}
