@@ -95,7 +95,7 @@ private struct PhoneView: View {
                     .font(.system(size: 52))
                     .foregroundStyle(Color.aab)
                 VStack(spacing: 6) {
-                    Text("Asia Alliance Bank")
+                    Text("AnyOtherBank")
                         .font(.title2).bold()
                         .foregroundStyle(Color.aabDark)
                     Text("Добро пожаловать")
@@ -308,7 +308,7 @@ private struct HomeView: View {
                 Color.aab.ignoresSafeArea(edges: .top)
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Asia Alliance Bank")
+                        Text("AnyOtherBank")
                             .font(.caption)
                             .foregroundStyle(.white.opacity(0.8))
                         Text("Добро пожаловать!")
