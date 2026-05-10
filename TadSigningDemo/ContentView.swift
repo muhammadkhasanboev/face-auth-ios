@@ -17,8 +17,10 @@ private enum Step { case phone, otp(phone: String), home }
 // MARK: - Root
 
 struct ContentView: View {
-    @AppStorage("isRegistered") private var isRegistered = false
+    /// Phone stored from last registration — used to restore SDK config on relaunch.
     @AppStorage("registeredPhone") private var registeredPhone = ""
+    /// Derived from TadSigning.isRegistered() — the single source of truth.
+    @State private var isRegistered = false
     @State private var step: Step = .phone
 
     var body: some View {
@@ -26,8 +28,10 @@ struct ContentView: View {
             Color.aabBg.ignoresSafeArea()
             if isRegistered {
                 HomeView(phone: registeredPhone) {
-                    isRegistered = false
+                    // Logout: wipe SDK storage and go back to phone screen
+                    TadSigning.logout()
                     registeredPhone = ""
+                    isRegistered = false
                     step = .phone
                 }
                 .transition(.opacity)
@@ -41,7 +45,7 @@ struct ContentView: View {
                 case .otp(let phone):
                     OTPView(phone: phone) {
                         registeredPhone = phone
-                        isRegistered = true
+                        isRegistered = TadSigning.isRegistered()
                     } onBack: {
                         step = .phone
                     }
@@ -52,6 +56,14 @@ struct ContentView: View {
             }
         }
         .animation(.easeInOut(duration: 0.3), value: isRegistered)
+        .onAppear {
+            // On launch: if a phone is stored, restore SDK config and check registration.
+            // If already registered → skip phone/SMS and go straight to home.
+            if !registeredPhone.isEmpty {
+                SDKConfig.setup(bankId: registeredPhone)
+                isRegistered = TadSigning.isRegistered()
+            }
+        }
     }
 }
 
