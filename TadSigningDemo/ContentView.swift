@@ -260,25 +260,21 @@ private struct OTPView: View {
     }
 
     private func verify() {
-        guard let vc = topVC() else { return }
         isLoading = true
         errorMsg = ""
-        let signingVC = TadSigningViewController(
-            config: SDKConfig.shared,
-            bankId: phone,
-            dto:    ["otp": code],
-            mode:   .register
-        ) { result in
-            isLoading = false
-            switch result {
-            case .success: onSuccess()
-            case .failure(let code, let msg):
-                errorMsg = code == .livenessFailed && msg.contains("cancel")
-                    ? "Отменено"
-                    : "Ошибка: \(msg)"
+        SDKConfig.setup(bankId: phone)
+        Task {
+            let status = await TadSigning.sign(dto: ["otp": code])
+            await MainActor.run {
+                isLoading = false
+                switch status {
+                case .statusOk:
+                    onSuccess()
+                case .statusError(let msg, let ec):
+                    errorMsg = ec == "USER_CANCELLED" ? "Отменено" : "Ошибка: \(msg)"
+                }
             }
         }
-        vc.present(signingVC, animated: true)
     }
 }
 
@@ -423,25 +419,22 @@ private struct HomeView: View {
     }
 
     private func signIn() {
-        guard let vc = topVC() else { return }
         isLoading = true
         jwt = ""
         errorMsg = ""
-        let signingVC = TadSigningViewController(
-            config: SDKConfig.shared,
-            bankId: phone,
-            dto:    [:],
-            mode:   .sign
-        ) { result in
-            isLoading = false
-            switch result {
-            case .success(let token, _):
-                jwt = token
-            case .failure(_, let msg):
-                errorMsg = "Ошибка входа: \(msg)"
+        SDKConfig.setup(bankId: phone)
+        Task {
+            let status = await TadSigning.sign(dto: [:])
+            await MainActor.run {
+                isLoading = false
+                switch status {
+                case .statusOk:
+                    jwt = "✓ Authenticated"
+                case .statusError(let msg, _):
+                    errorMsg = "Ошибка входа: \(msg)"
+                }
             }
         }
-        vc.present(signingVC, animated: true)
     }
 }
 
@@ -515,19 +508,6 @@ private struct AABButton: View {
         .disabled(!enabled)
         .animation(.easeInOut(duration: 0.2), value: enabled)
     }
-}
-
-// MARK: - Helpers
-
-private func topVC() -> UIViewController? {
-    guard let scene = UIApplication.shared.connectedScenes
-        .compactMap({ $0 as? UIWindowScene })
-        .first(where: { $0.activationState == .foregroundActive }),
-          let root = scene.windows.first(where: { $0.isKeyWindow })?.rootViewController
-    else { return nil }
-    var top = root
-    while let presented = top.presentedViewController { top = presented }
-    return top
 }
 
 #Preview {
