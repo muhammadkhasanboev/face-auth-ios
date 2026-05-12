@@ -314,6 +314,8 @@ private struct HomeView: View {
 
     @State private var isLoading = false
     @State private var errorMsg = ""
+    @State private var jwt = ""
+    @State private var showJWT = false
     @State private var showPayment = false
 
     var body: some View {
@@ -405,6 +407,33 @@ private struct HomeView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
 
+                        if !jwt.isEmpty {
+                            VStack(alignment: .leading, spacing: 10) {
+                                HStack {
+                                    Image(systemName: "checkmark.seal.fill")
+                                        .foregroundStyle(.green)
+                                    Text("Вход выполнен успешно")
+                                        .font(.subheadline).bold()
+                                    Spacer()
+                                }
+                                Divider()
+                                Button(showJWT ? "Скрыть токен" : "Показать JWT") {
+                                    showJWT.toggle()
+                                }
+                                .font(.caption.bold())
+                                .foregroundStyle(Color.aab)
+                                if showJWT {
+                                    Text(jwt)
+                                        .font(.system(.caption2, design: .monospaced))
+                                        .foregroundStyle(.secondary)
+                                        .textSelection(.enabled)
+                                }
+                            }
+                            .padding(16)
+                            .background(Color.green.opacity(0.05), in: RoundedRectangle(cornerRadius: 16))
+                            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.green.opacity(0.2)))
+                        }
+
                         Spacer().frame(height: 24)
 
                         // Sign out
@@ -433,6 +462,7 @@ private struct HomeView: View {
                 isLoading = false
                 switch status {
                 case .statusOk:
+                    jwt = "✓ Authenticated"
                     showPayment = true
                 case .statusError(let msg, _):
                     errorMsg = "Ошибка входа: \(msg)"
