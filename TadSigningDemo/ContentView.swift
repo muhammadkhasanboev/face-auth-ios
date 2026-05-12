@@ -87,73 +87,83 @@ private struct PhoneView: View {
     private var isValid: Bool { phone.filter(\.isNumber).count == 9 }
 
     var body: some View {
-        VStack(spacing: 0) {
-            // Header
-            VStack(spacing: 16) {
-                Spacer().frame(height: 60)
-                Image(systemName: "building.columns.fill")
-                    .font(.system(size: 52))
-                    .foregroundStyle(Color.aab)
-                VStack(spacing: 6) {
-                    Text("AnyOtherBank")
-                        .font(.title2).bold()
-                        .foregroundStyle(Color.aabDark)
-                    Text("Добро пожаловать")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+        ScrollView {
+            VStack(spacing: 0) {
+                // Header
+                VStack(spacing: 16) {
+                    Spacer().frame(height: 60)
+                    Image(systemName: "building.columns.fill")
+                        .font(.system(size: 52))
+                        .foregroundStyle(Color.aab)
+                    VStack(spacing: 6) {
+                        Text("AnyOtherBank")
+                            .font(.title2).bold()
+                            .foregroundStyle(Color.aabDark)
+                        Text("Добро пожаловать")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer().frame(height: 24)
                 }
-                Spacer().frame(height: 24)
-            }
 
-            // Card
-            VStack(alignment: .leading, spacing: 20) {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Номер телефона")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    HStack(spacing: 10) {
-                        Text("+998")
-                            .font(.body).bold()
-                            .foregroundStyle(Color.aab)
-                            .padding(.horizontal, 12)
+                // Card
+                VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Номер телефона")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        HStack(spacing: 10) {
+                            Text("+998")
+                                .font(.body).bold()
+                                .foregroundStyle(Color.aab)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 14)
+                                .background(Color.aabBg, in: RoundedRectangle(cornerRadius: 12))
+                            ZStack(alignment: .leading) {
+                                if phone.isEmpty {
+                                    Text("XX XXX XX XX")
+                                        .foregroundStyle(Color(.placeholderText))
+                                }
+                                TextField("", text: Binding(
+                                    get: { formatted },
+                                    set: { new in
+                                        let digits = new.filter(\.isNumber)
+                                        if digits.count <= 9 { phone = digits }
+                                    }
+                                ))
+                                .keyboardType(.numberPad)
+                                .focused($focused)
+                            }
+                            .padding(.horizontal, 14)
                             .padding(.vertical, 14)
                             .background(Color.aabBg, in: RoundedRectangle(cornerRadius: 12))
-                        ZStack(alignment: .leading) {
-                            if phone.isEmpty {
-                                Text("XX XXX XX XX")
-                                    .foregroundStyle(Color(.placeholderText))
-                            }
-                            TextField("", text: Binding(
-                                get: { formatted },
-                                set: { new in
-                                    let digits = new.filter(\.isNumber)
-                                    if digits.count <= 9 { phone = digits }
-                                }
-                            ))
-                            .keyboardType(.numberPad)
-                            .focused($focused)
                         }
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 14)
-                        .background(Color.aabBg, in: RoundedRectangle(cornerRadius: 12))
+                    }
+
+                    Text("Для первого входа мы отправим SMS-код. В дальнейшем вход — только по Face ID.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    AABButton(title: "Получить SMS-код", enabled: isValid) {
+                        onContinue("+998 \(formatted)")
                     }
                 }
+                .padding(24)
+                .background(Color.aabCard, in: RoundedRectangle(cornerRadius: 24))
+                .shadow(color: .black.opacity(0.06), radius: 16, y: 4)
+                .padding(.horizontal, 20)
 
-                Text("Для первого входа мы отправим SMS-код. В дальнейшем вход — только по Face ID.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-
-                AABButton(title: "Получить SMS-код", enabled: isValid) {
-                    onContinue("+998 \(formatted)")
-                }
+                Spacer().frame(height: 40)
             }
-            .padding(24)
-            .background(Color.aabCard, in: RoundedRectangle(cornerRadius: 24))
-            .shadow(color: .black.opacity(0.06), radius: 16, y: 4)
-            .padding(.horizontal, 20)
-
-            Spacer()
+        }
+        .scrollDismissesKeyboard(.interactively)
+        .background(Color.aabBg.ignoresSafeArea())
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+//                Spacer()
+//                Button("Готово") { focused = false }
+            }
         }
         .onAppear { focused = true }
     }
@@ -256,6 +266,12 @@ private struct OTPView: View {
             Spacer()
         }
         .background(Color.aabBg.ignoresSafeArea())
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+//                Spacer()
+//                Button("Готово") { focused = false }
+            }
+        }
         .onAppear {
             focused = true
             restartTimer()
