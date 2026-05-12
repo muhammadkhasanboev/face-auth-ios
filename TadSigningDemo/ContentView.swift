@@ -313,142 +313,118 @@ private struct HomeView: View {
     let onSignOut: () -> Void
 
     @State private var isLoading = false
-    @State private var jwt = ""
     @State private var errorMsg = ""
-    @State private var showJWT = false
+    @State private var showPayment = false
 
     var body: some View {
-        VStack(spacing: 0) {
-            // Header
-            ZStack(alignment: .bottom) {
-                Color.aab.ignoresSafeArea(edges: .top)
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("AnyOtherBank")
-                            .font(.caption)
-                            .foregroundStyle(.white.opacity(0.8))
-                        Text("Добро пожаловать!")
-                            .font(.title2).bold()
-                            .foregroundStyle(.white)
-                        Text(phone)
-                            .font(.caption)
-                            .foregroundStyle(.white.opacity(0.7))
-                    }
-                    Spacer()
-                    Image(systemName: "building.columns.fill")
-                        .font(.system(size: 32))
-                        .foregroundStyle(.white.opacity(0.9))
-                }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 24)
-                .padding(.top, 60)
-            }
-            .frame(height: 180)
-
-            ScrollView {
-                VStack(spacing: 16) {
-                    Spacer().frame(height: 8)
-
-                    // Passkey info card
-                    HStack(spacing: 16) {
-                        Image(systemName: "faceid")
-                            .font(.system(size: 28))
-                            .foregroundStyle(Color.aab)
-                            .frame(width: 56, height: 56)
-                            .background(Color.aab.opacity(0.1), in: RoundedRectangle(cornerRadius: 14))
+        NavigationStack {
+            VStack(spacing: 0) {
+                // Header
+                ZStack(alignment: .bottom) {
+                    Color.aab.ignoresSafeArea(edges: .top)
+                    HStack {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Биометрический вход")
-                                .font(.subheadline).bold()
-                            Text("SMS больше не нужен. Входите по Face ID за одно касание.")
+                            Text("AnyOtherBank")
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
+                                .foregroundStyle(.white.opacity(0.8))
+                            Text("Добро пожаловать!")
+                                .font(.title2).bold()
+                                .foregroundStyle(.white)
+                            Text(phone)
+                                .font(.caption)
+                                .foregroundStyle(.white.opacity(0.7))
                         }
                         Spacer()
+                        Image(systemName: "building.columns.fill")
+                            .font(.system(size: 32))
+                            .foregroundStyle(.white.opacity(0.9))
                     }
-                    .padding(20)
-                    .background(Color.aabCard, in: RoundedRectangle(cornerRadius: 20))
-                    .shadow(color: .black.opacity(0.05), radius: 12, y: 4)
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 24)
+                    .padding(.top, 60)
+                }
+                .frame(height: 80)
 
-                    // Sign in button
-                    if isLoading {
-                        HStack {
-                            ProgressView()
-                            Text("Проверка...")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(Color.aabCard, in: RoundedRectangle(cornerRadius: 16))
-                        .shadow(color: .black.opacity(0.05), radius: 8)
-                    } else {
-                        Button(action: signIn) {
-                            HStack(spacing: 12) {
-                                Image(systemName: "faceid")
-                                    .font(.title3)
-                                Text("Войти по Face ID")
-                                    .font(.body.bold())
+                ScrollView {
+                    VStack(spacing: 16) {
+                        Spacer().frame(height: 80)
+
+                        // Passkey info card
+                        HStack(spacing: 16) {
+                            Image(systemName: "faceid")
+                                .font(.system(size: 28))
+                                .foregroundStyle(Color.aab)
+                                .frame(width: 56, height: 56)
+                                .background(Color.aab.opacity(0.1), in: RoundedRectangle(cornerRadius: 14))
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Биометрический вход")
+                                    .font(.subheadline).bold()
+                                Text("SMS больше не нужен. Входите по Face ID за одно касание.")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
                             }
-                            .foregroundStyle(.white)
+                            Spacer()
+                        }
+                        .padding(20)
+                        .background(Color.aabCard, in: RoundedRectangle(cornerRadius: 20))
+                        .shadow(color: .black.opacity(0.05), radius: 12, y: 4)
+
+                        // Sign in button
+                        if isLoading {
+                            HStack {
+                                ProgressView()
+                                Text("Проверка...")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                            }
                             .frame(maxWidth: .infinity)
                             .frame(height: 56)
-                            .background(Color.aab, in: RoundedRectangle(cornerRadius: 16))
-                            .shadow(color: Color.aab.opacity(0.4), radius: 10, y: 4)
+                            .background(Color.aabCard, in: RoundedRectangle(cornerRadius: 16))
+                            .shadow(color: .black.opacity(0.05), radius: 8)
+                        } else {
+                            Button(action: signIn) {
+                                HStack(spacing: 12) {
+                                    Image(systemName: "faceid")
+                                        .font(.title3)
+                                    Text("Войти по Face ID")
+                                        .font(.body.bold())
+                                }
+                                .foregroundStyle(.white)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 56)
+                                .background(Color.aab, in: RoundedRectangle(cornerRadius: 16))
+                                .shadow(color: Color.aab.opacity(0.4), radius: 10, y: 4)
+                            }
                         }
-                    }
 
-                    if !errorMsg.isEmpty {
-                        Text(errorMsg)
+                        if !errorMsg.isEmpty {
+                            Text(errorMsg)
+                                .font(.caption)
+                                .foregroundStyle(.red)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+
+                        Spacer().frame(height: 24)
+
+                        // Sign out
+                        Button("Выйти из аккаунта", action: onSignOut)
                             .font(.caption)
-                            .foregroundStyle(.red)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundStyle(.secondary)
                     }
-
-                    // JWT result
-                    if !jwt.isEmpty {
-                        VStack(alignment: .leading, spacing: 10) {
-                            HStack {
-                                Image(systemName: "checkmark.seal.fill")
-                                    .foregroundStyle(.green)
-                                Text("Вход выполнен успешно")
-                                    .font(.subheadline).bold()
-                                Spacer()
-                            }
-                            Divider()
-                            Button(showJWT ? "Скрыть токен" : "Показать JWT") {
-                                showJWT.toggle()
-                            }
-                            .font(.caption.bold())
-                            .foregroundStyle(Color.aab)
-                            if showJWT {
-                                Text(jwt)
-                                    .font(.system(.caption2, design: .monospaced))
-                                    .foregroundStyle(.secondary)
-                                    .textSelection(.enabled)
-                            }
-                        }
-                        .padding(16)
-                        .background(Color.green.opacity(0.05), in: RoundedRectangle(cornerRadius: 16))
-                        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.green.opacity(0.2)))
-                    }
-
-                    Spacer().frame(height: 24)
-
-                    // Sign out
-                    Button("Выйти из аккаунта", action: onSignOut)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                    .padding(.horizontal, 20)
                 }
-                .padding(.horizontal, 20)
+            }
+            .background(Color.aabBg.ignoresSafeArea())
+            .navigationBarHidden(true)
+            .navigationDestination(isPresented: $showPayment) {
+                PaymentView(phone: phone)
             }
         }
-        .background(Color.aabBg.ignoresSafeArea())
     }
 
     private func signIn() {
         isLoading = true
-        jwt = ""
         errorMsg = ""
         SDKConfig.setup(bankId: phone)
         Task {
@@ -457,10 +433,194 @@ private struct HomeView: View {
                 isLoading = false
                 switch status {
                 case .statusOk:
-                    jwt = "✓ Authenticated"
+                    showPayment = true
                 case .statusError(let msg, _):
                     errorMsg = "Ошибка входа: \(msg)"
                 }
+            }
+        }
+    }
+}
+
+// MARK: - Payment Screen
+
+private struct PaymentView: View {
+    let phone: String
+
+    @State private var payLoading = false
+    @State private var paySuccess = ""
+    @State private var payError = ""
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 20) {
+                Spacer().frame(height: 8)
+                PaymentCardView(
+                    isLoading: payLoading,
+                    successMessage: paySuccess,
+                    errorMessage: payError
+                ) { toPhone, amount in
+                    pay(toPhone: toPhone, amount: amount)
+                }
+                Spacer().frame(height: 24)
+            }
+            .padding(.horizontal, 20)
+        }
+        .background(Color.aabBg.ignoresSafeArea())
+        .navigationTitle("Перевод")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(false)
+    }
+
+    private func pay(toPhone: String, amount: String) {
+        payLoading = true
+        paySuccess = ""
+        payError = ""
+        SDKConfig.setup(bankId: phone)
+        Task {
+            let status = await TadSigning.sign(dto: [:])
+            await MainActor.run {
+                payLoading = false
+                switch status {
+                case .statusOk:
+                    paySuccess = "Перевод \(amount) сум на \(toPhone) подтверждён"
+                case .statusError(let msg, let ec):
+                    payError = ec == "USER_CANCELLED" ? "Отменено" : "Ошибка: \(msg)"
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Payment Card
+
+private struct PaymentCardView: View {
+    let isLoading: Bool
+    let successMessage: String
+    let errorMessage: String
+    let onPay: (String, String) -> Void
+
+    @State private var phone = ""
+    @State private var amount = ""
+    @FocusState private var focusedField: Field?
+
+    private enum Field { case phone, amount }
+
+    private var formatted: String {
+        let digits = phone.filter(\.isNumber)
+        guard !digits.isEmpty else { return "" }
+        var result = ""
+        for (i, ch) in digits.prefix(9).enumerated() {
+            if i == 2 || i == 5 || i == 7 { result += " " }
+            result.append(ch)
+        }
+        return result
+    }
+
+    private var isValid: Bool {
+        phone.filter(\.isNumber).count == 9 && !amount.isEmpty
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack(spacing: 10) {
+                Image(systemName: "arrow.up.right.circle.fill")
+                    .font(.system(size: 22))
+                    .foregroundStyle(Color.aab)
+                Text("Перевод по номеру")
+                    .font(.subheadline).bold()
+                Spacer()
+            }
+
+            // Recipient phone
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Номер получателя")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                HStack(spacing: 10) {
+                    Text("+998")
+                        .font(.body).bold()
+                        .foregroundStyle(Color.aab)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 12)
+                        .background(Color.aabBg, in: RoundedRectangle(cornerRadius: 10))
+                    ZStack(alignment: .leading) {
+                        if phone.isEmpty {
+                            Text("XX XXX XX XX")
+                                .foregroundStyle(Color(.placeholderText))
+                        }
+                        TextField("", text: Binding(
+                            get: { formatted },
+                            set: { new in
+                                let digits = new.filter(\.isNumber)
+                                if digits.count <= 9 { phone = digits }
+                            }
+                        ))
+                        .keyboardType(.numberPad)
+                        .focused($focusedField, equals: .phone)
+                    }
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 12)
+                    .background(Color.aabBg, in: RoundedRectangle(cornerRadius: 10))
+                }
+            }
+
+            // Amount
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Сумма")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                HStack {
+                    TextField("0", text: Binding(
+                        get: { amount },
+                        set: { new in amount = new.filter(\.isNumber) }
+                    ))
+                    .keyboardType(.numberPad)
+                    .focused($focusedField, equals: .amount)
+                    Text("сум")
+                        .font(.caption.bold())
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 12)
+                .background(Color.aabBg, in: RoundedRectangle(cornerRadius: 10))
+            }
+
+            // Pay button / loading
+            if isLoading {
+                HStack {
+                    ProgressView()
+                    Text("Подтверждение...")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: 50)
+            } else {
+                AABButton(title: "Оплатить", enabled: isValid) {
+                    focusedField = nil
+                    onPay("+998\(phone)", amount)
+                }
+            }
+
+            if !successMessage.isEmpty {
+                HStack(spacing: 8) {
+                    Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
+                    Text(successMessage).font(.caption).foregroundStyle(.green)
+                }
+            }
+            if !errorMessage.isEmpty {
+                Text(errorMessage).font(.caption).foregroundStyle(.red)
+            }
+        }
+        .padding(20)
+        .background(Color.aabCard, in: RoundedRectangle(cornerRadius: 20))
+        .shadow(color: .black.opacity(0.05), radius: 12, y: 4)
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Готово") { focusedField = nil }
             }
         }
     }
