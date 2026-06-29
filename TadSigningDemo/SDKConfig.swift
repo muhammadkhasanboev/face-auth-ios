@@ -16,7 +16,8 @@ enum SDKConfig {
             rpId:        "signing.tadi.uz",
             serviceName: "tad-signing-demo",
             bankId:      bankId,
-            blockProxy:  true
+            blockProxy:  true,
+            language: .ru
         )
     }
 }
