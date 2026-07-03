@@ -2,7 +2,7 @@ import Foundation
 import TadSigningSDK
 
 enum SDKConfig {
-    static func setup(bankId: String) {
+    static func setup(bankId: String, token: String? = nil) {
         TadSigning.configure(
             apiBaseUrl:   URL(string: "https://signing.tadi.uz")!,
             publicKeyPem: """
@@ -16,6 +16,7 @@ enum SDKConfig {
             rpId:        "signing.tadi.uz",
             serviceName: "tad-signing-demo",
             bankId:      bankId,
+            token: token,
             blockProxy:  true,
             language: .ru
         )
