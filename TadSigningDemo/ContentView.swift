@@ -22,6 +22,7 @@ struct ContentView: View {
     /// Derived from TadSigning.isRegistered() — the single source of truth.
     @State private var isRegistered = false
     @State private var step: Step = .phone
+    @EnvironmentObject private var loc: LocalizationManager
 
     var body: some View {
         ZStack {
@@ -55,15 +56,38 @@ struct ContentView: View {
                 }
             }
         }
+        .overlay(alignment: .topTrailing) {
+            LanguageToggle()
+                .padding(.top, 8)
+                .padding(.trailing, 16)
+        }
         .animation(.easeInOut(duration: 0.3), value: isRegistered)
         .onAppear {
             // On launch: if a phone is stored, restore SDK config and check registration.
             // If already registered → skip phone/SMS and go straight to home.
             if !registeredPhone.isEmpty {
-                SDKConfig.setup(bankId: registeredPhone)
+                SDKConfig.setup(bankId: registeredPhone, language: loc.language)
                 isRegistered = TadSigning.isRegistered()
             }
         }
+    }
+}
+
+// MARK: - Language Toggle
+
+private struct LanguageToggle: View {
+    @EnvironmentObject private var loc: LocalizationManager
+
+    var body: some View {
+        Picker("", selection: $loc.language) {
+            ForEach(AppLanguage.allCases) { lang in
+                Text(lang.label).tag(lang)
+            }
+        }
+        .pickerStyle(.segmented)
+        .frame(width: 100)
+        .background(Color.aabCard, in: RoundedRectangle(cornerRadius: 8))
+        .shadow(color: .black.opacity(0.08), radius: 6, y: 2)
     }
 }
 
@@ -73,6 +97,7 @@ private struct PhoneView: View {
     let onContinue: (String) -> Void
     @State private var phone = ""
     @FocusState private var focused: Bool
+    @EnvironmentObject private var loc: LocalizationManager
 
     private var formatted: String {
         let digits = phone.filter(\.isNumber)
@@ -99,7 +124,7 @@ private struct PhoneView: View {
                         Text("AnyOtherBank")
                             .font(.title2).bold()
                             .foregroundStyle(Color.aabDark)
-                        Text("Добро пожаловать")
+                        Text(loc.t("Welcome"))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -109,7 +134,7 @@ private struct PhoneView: View {
                 // Card
                 VStack(alignment: .leading, spacing: 20) {
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Номер телефона")
+                        Text(loc.t("Phone number"))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                         HStack(spacing: 10) {
@@ -140,12 +165,12 @@ private struct PhoneView: View {
                         }
                     }
 
-                    Text("Для первого входа мы отправим SMS-код. В дальнейшем вход — только по Face ID.")
+                    Text(loc.t("We'll send an SMS code for your first sign in. After that, you'll sign in with Face ID only."))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    AABButton(title: "Получить SMS-код", enabled: isValid) {
+                    AABButton(title: loc.t("Get SMS code"), enabled: isValid) {
                         onContinue("+998 \(formatted)")
                     }
                 }
@@ -162,7 +187,7 @@ private struct PhoneView: View {
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
 //                Spacer()
-//                Button("Готово") { focused = false }
+//                Button(loc.t("Done")) { focused = false }
             }
         }
         .onAppear { focused = true }
@@ -182,6 +207,7 @@ private struct OTPView: View {
     @State private var secondsLeft = 60
     @State private var timer: Timer?
     @FocusState private var focused: Bool
+    @EnvironmentObject private var loc: LocalizationManager
 
     private var isValid: Bool { code.count == 6 }
 
@@ -214,9 +240,9 @@ private struct OTPView: View {
             Spacer().frame(height: 24)
 
             VStack(spacing: 6) {
-                Text("Введите код")
+                Text(loc.t("Enter code"))
                     .font(.title2).bold()
-                Text("Код отправлен на \(phone)")
+                Text(loc.f("Code sent to %@", phone))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -240,11 +266,11 @@ private struct OTPView: View {
             // Resend
             Group {
                 if secondsLeft > 0 {
-                    Text("Отправить повторно через \(secondsLeft) сек")
+                    Text(loc.f("Resend in %d sec", secondsLeft))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 } else {
-                    Button("Отправить повторно") { restartTimer() }
+                    Button(loc.t("Resend")) { restartTimer() }
                         .font(.caption.bold())
                         .foregroundStyle(Color.aab)
                 }
@@ -258,7 +284,7 @@ private struct OTPView: View {
                         .tint(Color.aab)
                         .frame(height: 50)
                 } else {
-                    AABButton(title: "Подтвердить и войти", enabled: isValid, action: verify)
+                    AABButton(title: loc.t("Confirm and sign in"), enabled: isValid, action: verify)
                 }
             }
             .padding(.horizontal, 20)
@@ -269,7 +295,7 @@ private struct OTPView: View {
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
 //                Spacer()
-//                Button("Готово") { focused = false }
+//                Button(loc.t("Done")) { focused = false }
             }
         }
         .onAppear {
@@ -290,7 +316,7 @@ private struct OTPView: View {
     private func verify() {
         isLoading = true
         errorMsg = ""
-        SDKConfig.setup(bankId: phone)
+        SDKConfig.setup(bankId: phone, language: loc.language)
         Task {
             let status = await TadSigning.sign(dto: ["otp": code])
             await MainActor.run {
@@ -299,7 +325,7 @@ private struct OTPView: View {
                 case .statusOk:
                     onSuccess()
                 case .statusError(let msg, let ec):
-                    errorMsg = ec == "USER_CANCELLED" ? "Отменено" : "Ошибка: \(msg)"
+                    errorMsg = ec == "USER_CANCELLED" ? loc.t("Cancelled") : loc.f("Error: %@", msg)
                 }
             }
         }
@@ -317,6 +343,10 @@ private struct HomeView: View {
     @State private var jwt = ""
     @State private var showJWT = false
     @State private var showPayment = false
+    @State private var isDeleting = false
+    @State private var deleteMsg = ""
+    @EnvironmentObject private var loc: LocalizationManager
+    
 
     var body: some View {
         NavigationStack {
@@ -329,7 +359,8 @@ private struct HomeView: View {
                             Text("AnyOtherBank")
                                 .font(.caption)
                                 .foregroundStyle(.white.opacity(0.8))
-                            Text("Добро пожаловать!")
+
+                            Text(loc.t("Welcome!"))
                                 .font(.title2).bold()
                                 .foregroundStyle(.white)
                             Text(phone)
@@ -359,9 +390,9 @@ private struct HomeView: View {
                                 .frame(width: 56, height: 56)
                                 .background(Color.aab.opacity(0.1), in: RoundedRectangle(cornerRadius: 14))
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("Биометрический вход")
+                                Text(loc.t("Biometric sign in"))
                                     .font(.subheadline).bold()
-                                Text("SMS больше не нужен. Входите по Face ID за одно касание.")
+                                Text(loc.t("SMS is no longer needed. Sign in with Face ID in one tap."))
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                                     .fixedSize(horizontal: false, vertical: true)
@@ -376,7 +407,7 @@ private struct HomeView: View {
                         if isLoading {
                             HStack {
                                 ProgressView()
-                                Text("Проверка...")
+                                Text(loc.t("Checking..."))
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
                             }
@@ -389,7 +420,7 @@ private struct HomeView: View {
                                 HStack(spacing: 12) {
                                     Image(systemName: "faceid")
                                         .font(.title3)
-                                    Text("Войти по Face ID")
+                                    Text(loc.t("Sign in with Face ID"))
                                         .font(.body.bold())
                                 }
                                 .foregroundStyle(.white)
@@ -412,12 +443,12 @@ private struct HomeView: View {
                                 HStack {
                                     Image(systemName: "checkmark.seal.fill")
                                         .foregroundStyle(.green)
-                                    Text("Вход выполнен успешно")
+                                    Text(loc.t("Signed in successfully"))
                                         .font(.subheadline).bold()
                                     Spacer()
                                 }
                                 Divider()
-                                Button(showJWT ? "Скрыть токен" : "Показать JWT") {
+                                Button(showJWT ? loc.t("Hide token") : loc.t("Show JWT")) {
                                     showJWT.toggle()
                                 }
                                 .font(.caption.bold())
@@ -436,10 +467,45 @@ private struct HomeView: View {
 
                         Spacer().frame(height: 24)
 
+                        // TEST: the SDK's current deviceId — selectable so it can be
+                        // copied and sent (e.g. to remove this exact registration on the
+                        // server via /api/v1/registration/remove during a joint test).
+                        VStack(spacing: 2) {
+                            Text("deviceId (tap-hold to copy):")
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                            Text(TadSigning.deviceId() ?? "none")
+                                .font(.system(.caption2, design: .monospaced))
+                                .foregroundStyle(.secondary)
+                                .textSelection(.enabled)
+                                .multilineTextAlignment(.center)
+                        }
+                        .onAppear { print("deviceId:", TadSigning.deviceId() ?? "none") }
+
                         // Sign out
-                        Button("Выйти из аккаунта", action: onSignOut)
+                        Button(loc.t("Sign out"), action: onSignOut)
                             .font(.caption)
                             .foregroundStyle(.secondary)
+
+                        // TEST: delete the current registration from the server.
+                        // On success the local session is wiped and we return to the
+                        // register screen (next sign() will start a fresh registration).
+                        if isDeleting {
+                            ProgressView().tint(.red).padding(.top, 4)
+                        } else {
+                            Button("Delete registration from server", action: deleteFromServer)
+                                .font(.caption.bold())
+                                .foregroundStyle(.red)
+                                .padding(.top, 4)
+                        }
+                        if !deleteMsg.isEmpty {
+                            Text(deleteMsg)
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                                .multilineTextAlignment(.center)
+                        }
+
+                        Spacer().frame(height: 24)
                     }
                     .padding(.horizontal, 20)
                 }
@@ -455,7 +521,7 @@ private struct HomeView: View {
     private func signIn() {
         isLoading = true
         errorMsg = ""
-        SDKConfig.setup(bankId: phone)
+        SDKConfig.setup(bankId: phone, language: loc.language)
         Task {
             let status = await TadSigning.sign(dto: [:])
             await MainActor.run {
@@ -464,8 +530,34 @@ private struct HomeView: View {
                 case .statusOk:
                     jwt = "✓ Authenticated"
                     showPayment = true
-                case .statusError(let msg, _):
-                    errorMsg = "Ошибка входа: \(msg)"
+                case .statusError(let msg, let code):
+                    if code.hasPrefix("WEBAUTHN_") {
+                        // Registration no longer valid on the server — the SDK already
+                        // wiped the local session → send the user to re-register.
+                        onSignOut()
+                    } else {
+                        errorMsg = loc.f("Sign in error: %@", msg)
+                    }
+                }
+            }
+        }
+    }
+
+    private func deleteFromServer() {
+        isDeleting = true
+        deleteMsg = ""
+        Task {
+            // bankId == the phone the app registered with (see SDKConfig.setup).
+            let result = await RegistrationRemover.removeFromServer(bankId: phone)
+            await MainActor.run {
+                isDeleting = false
+                if result.ok {
+                    // Deleted on the server, but KEEP the local session so you can test:
+                    // the next Sign in will hit the server, fail (WEBAUTHN_USER_NOT_FOUND),
+                    // and route to registration.
+                    deleteMsg = "Removed from server ✓ — now tap Sign in (it should fail → register)."
+                } else {
+                    deleteMsg = result.message
                 }
             }
         }
@@ -481,6 +573,7 @@ private struct PaymentView: View {
     @State private var paySuccess = ""
     @State private var payError = ""
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var loc: LocalizationManager
 
     var body: some View {
         ScrollView {
@@ -498,7 +591,7 @@ private struct PaymentView: View {
             .padding(.horizontal, 20)
         }
         .background(Color.aabBg.ignoresSafeArea())
-        .navigationTitle("Перевод")
+        .navigationTitle(loc.t("Transfer"))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(false)
     }
@@ -507,16 +600,16 @@ private struct PaymentView: View {
         payLoading = true
         paySuccess = ""
         payError = ""
-        SDKConfig.setup(bankId: phone)
+        SDKConfig.setup(bankId: phone, language: loc.language)
         Task {
             let status = await TadSigning.sign(dto: [:])
             await MainActor.run {
                 payLoading = false
                 switch status {
                 case .statusOk:
-                    paySuccess = "Перевод \(amount) сум на \(toPhone) подтверждён"
+                    paySuccess = loc.f("Transfer %@ sum to %@ confirmed", amount, toPhone)
                 case .statusError(let msg, let ec):
-                    payError = ec == "USER_CANCELLED" ? "Отменено" : "Ошибка: \(msg)"
+                    payError = ec == "USER_CANCELLED" ? loc.t("Cancelled") : loc.f("Error: %@", msg)
                 }
             }
         }
@@ -534,6 +627,7 @@ private struct PaymentCardView: View {
     @State private var phone = ""
     @State private var amount = ""
     @FocusState private var focusedField: Field?
+    @EnvironmentObject private var loc: LocalizationManager
 
     private enum Field { case phone, amount }
 
@@ -558,14 +652,14 @@ private struct PaymentCardView: View {
                 Image(systemName: "arrow.up.right.circle.fill")
                     .font(.system(size: 22))
                     .foregroundStyle(Color.aab)
-                Text("Перевод по номеру")
+                Text(loc.t("Transfer by number"))
                     .font(.subheadline).bold()
                 Spacer()
             }
 
             // Recipient phone
             VStack(alignment: .leading, spacing: 6) {
-                Text("Номер получателя")
+                Text(loc.t("Recipient number"))
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 HStack(spacing: 10) {
@@ -598,7 +692,7 @@ private struct PaymentCardView: View {
 
             // Amount
             VStack(alignment: .leading, spacing: 6) {
-                Text("Сумма")
+                Text(loc.t("Amount"))
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 HStack {
@@ -608,7 +702,7 @@ private struct PaymentCardView: View {
                     ))
                     .keyboardType(.numberPad)
                     .focused($focusedField, equals: .amount)
-                    Text("сум")
+                    Text(loc.t("sum"))
                         .font(.caption.bold())
                         .foregroundStyle(.secondary)
                 }
@@ -621,14 +715,14 @@ private struct PaymentCardView: View {
             if isLoading {
                 HStack {
                     ProgressView()
-                    Text("Подтверждение...")
+                    Text(loc.t("Confirming..."))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 50)
             } else {
-                AABButton(title: "Оплатить", enabled: isValid) {
+                AABButton(title: loc.t("Pay"), enabled: isValid) {
                     focusedField = nil
                     onPay("+998\(phone)", amount)
                 }
@@ -650,7 +744,7 @@ private struct PaymentCardView: View {
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
-                Button("Готово") { focusedField = nil }
+                Button(loc.t("Done")) { focusedField = nil }
             }
         }
     }

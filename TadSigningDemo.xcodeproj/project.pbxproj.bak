@@ -9,16 +9,14 @@
 /* Begin PBXBuildFile section */
 		1C388B2EA21F37C322C4509E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F14A43CAA56F29F7C301B4 /* App.swift */; };
 		414C12749C30BCFFD8FAD55C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E24D125E051681854C1A0685 /* Assets.xcassets */; };
-		52599A5E303416AC0012C177 /* TadSigningSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52599A5D303416950012C177 /* TadSigningSDK.xcframework */; };
+		5278A2CA3020757800310C46 /* TadSigningSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5278A2C83020754E00310C46 /* TadSigningSDK.xcframework */; };
 		5B2F22F5115CC95AE0CFAF9B /* SDKConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8662F675EB085900272923 /* SDKConfig.swift */; };
 		9019996BDF76E3AF26D3AC74 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4ED1955A10387A604ECB662 /* ContentView.swift */; };
-		EEE4FC8F7118C56DC9B6DC2B /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0FAC1EC96AB67A1C2365EE /* LocalizationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2721F6047EE57EB6B6E454AB /* TadSigningDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TadSigningDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F0FAC1EC96AB67A1C2365EE /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
-		52599A5D303416950012C177 /* TadSigningSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = TadSigningSDK.xcframework; sourceTree = "<group>"; };
+		5278A2C83020754E00310C46 /* TadSigningSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = TadSigningSDK.xcframework; sourceTree = "<group>"; };
 		732798A21857C6B85A3A3573 /* TadSigningDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TadSigningDemo.entitlements; sourceTree = "<group>"; };
 		8B2E9C1B3922F00148343585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		93F14A43CAA56F29F7C301B4 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -32,7 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52599A5E303416AC0012C177 /* TadSigningSDK.xcframework in Frameworks */,
+				5278A2CA3020757800310C46 /* TadSigningSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,14 +52,13 @@
 				E24D125E051681854C1A0685 /* Assets.xcassets */,
 				A4ED1955A10387A604ECB662 /* ContentView.swift */,
 				8B2E9C1B3922F00148343585 /* Info.plist */,
-				4F0FAC1EC96AB67A1C2365EE /* LocalizationManager.swift */,
 				EB8662F675EB085900272923 /* SDKConfig.swift */,
 				732798A21857C6B85A3A3573 /* TadSigningDemo.entitlements */,
 			);
 			path = TadSigningDemo;
 			sourceTree = "<group>";
 		};
-		52599A59303347A20012C177 /* Frameworks */ = {
+		5278A2C93020757800310C46 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -71,19 +68,11 @@
 		A37F2CF79CFDFCF961D2EDBF = {
 			isa = PBXGroup;
 			children = (
-				EB7DE747BDD6D0CDE579172D /* Packages */,
+				5278A2C83020754E00310C46 /* TadSigningSDK.xcframework */,
 				2F8FBEAF5B56D331BE75AABA /* TadSigningDemo */,
-				52599A59303347A20012C177 /* Frameworks */,
+				5278A2C93020757800310C46 /* Frameworks */,
 				19481B89672E1D8984CF3E3C /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		EB7DE747BDD6D0CDE579172D /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				52599A5D303416950012C177 /* TadSigningSDK.xcframework */,
-			);
-			name = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,7 +146,6 @@
 			files = (
 				1C388B2EA21F37C322C4509E /* App.swift in Sources */,
 				9019996BDF76E3AF26D3AC74 /* ContentView.swift in Sources */,
-				EEE4FC8F7118C56DC9B6DC2B /* LocalizationManager.swift in Sources */,
 				5B2F22F5115CC95AE0CFAF9B /* SDKConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

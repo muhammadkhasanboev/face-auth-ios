@@ -1,0 +1,4 @@
+framework module TadSigningSDK {
+  header "TadSigningSDK-Swift.h"
+  requires objc
+}

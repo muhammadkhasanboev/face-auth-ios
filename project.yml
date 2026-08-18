@@ -32,6 +32,7 @@ targets:
         ALWAYS_SEARCH_USER_PATHS: NO
         CLANG_ENABLE_MODULES: YES
         SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     info:
       path: TadSigningDemo/Info.plist
       properties:
@@ -40,3 +41,14 @@ targets:
         NSCameraUsageDescription: "Required for face liveness check during biometric sign-in"
         NSFaceIDUsageDescription: "Used to secure your Passkey during registration and sign-in"
         ITSAppUsesNonExemptEncryption: false
+        CFBundleIconName: AppIcon
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
