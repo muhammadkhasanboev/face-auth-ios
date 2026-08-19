@@ -7,24 +7,55 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0914B62C857904F1992AE67E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA91630408C61E9E695FC8 /* HomeViewModel.swift */; };
+		1BA1803189EB1EC70C1CA7A9 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A748FEEFBD6A7F51030F0 /* LocalizationManager.swift */; };
 		1C388B2EA21F37C322C4509E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F14A43CAA56F29F7C301B4 /* App.swift */; };
+		1E06DCE1588414D9ACBA9D6F /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D9ABA563D7D689E0FF9C7D /* RootViewModel.swift */; };
+		354915D2AA02AC3C3061B65A /* PaymentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA45E98FB5631477EBA337 /* PaymentCardView.swift */; };
+		3DF063452D21C3FC427D3B7C /* OTPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C0A499D32A1C386883F61 /* OTPViewModel.swift */; };
+		3F482DFB332BBFBD46A117AC /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1040E2B67C80F79370D0CD /* AppRoute.swift */; };
 		414C12749C30BCFFD8FAD55C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E24D125E051681854C1A0685 /* Assets.xcassets */; };
-		52599A5E303416AC0012C177 /* TadSigningSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52599A5D303416950012C177 /* TadSigningSDK.xcframework */; };
-		5B2F22F5115CC95AE0CFAF9B /* SDKConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8662F675EB085900272923 /* SDKConfig.swift */; };
-		9019996BDF76E3AF26D3AC74 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4ED1955A10387A604ECB662 /* ContentView.swift */; };
-		EEE4FC8F7118C56DC9B6DC2B /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0FAC1EC96AB67A1C2365EE /* LocalizationManager.swift */; };
+		699AB4B0D658F172ED662C7E /* Color+Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A99B57A09B6B4AF3BA7281 /* Color+Brand.swift */; };
+		70FB9B09DDB40211CB4C92BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117E2F09B1E1CA35A8C4B443 /* ContentView.swift */; };
+		7E5B7ACE9E187C1B6D88B312 /* SDKConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5778800F0A205707F063FE29 /* SDKConfig.swift */; };
+		86AEF479E4FAEB12F7F7AF91 /* LanguageToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CA67BC84F81DAAE6006D65 /* LanguageToggle.swift */; };
+		9BBEDF1B3749310049097AA3 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839E7AEEF263FEBE42A011CA /* PhoneView.swift */; };
+		A3AFCEBBCD2B71DCA23C1A90 /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1053E3856D89700AA32043 /* OTPView.swift */; };
+		A70885527ED3CE67AAC9B6F8 /* PhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFDD8CA89216A64A1392462 /* PhoneViewModel.swift */; };
+		C21D7B8F32C33A13DD748193 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8E4EEF4499C4BF5A6DCB8C /* HomeView.swift */; };
+		C921739378419747F7BCD910 /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7764C7D3190E00D86C0DBD97 /* AppLanguage.swift */; };
+		D41F985C2D8375C95BB26F02 /* PaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6FC43C0182ED52758A3894 /* PaymentViewModel.swift */; };
+		D7DEB6A6FEAF63BD7B882878 /* OTPBoxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448EBA95BA92ADDF322CD9F7 /* OTPBoxes.swift */; };
+		F63A465C2EBB5A9537070553 /* TadSigningSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 629F7C5F70485A232C5287C5 /* TadSigningSDK */; };
+		F7750CC9D49FEFCFE3F09E32 /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB181DB1C101FCA317E50C3B /* PaymentView.swift */; };
+		FF8366EC250D4DB1CA3E9B48 /* AABButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194C7345CD1F665E659CB87F /* AABButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		117E2F09B1E1CA35A8C4B443 /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		194C7345CD1F665E659CB87F /* AABButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AABButton.swift; sourceTree = "<group>"; };
 		2721F6047EE57EB6B6E454AB /* TadSigningDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TadSigningDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F0FAC1EC96AB67A1C2365EE /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
-		52599A5D303416950012C177 /* TadSigningSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = TadSigningSDK.xcframework; sourceTree = "<group>"; };
+		448EBA95BA92ADDF322CD9F7 /* OTPBoxes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OTPBoxes.swift; sourceTree = "<group>"; };
+		51CA67BC84F81DAAE6006D65 /* LanguageToggle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LanguageToggle.swift; sourceTree = "<group>"; };
+		5778800F0A205707F063FE29 /* SDKConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SDKConfig.swift; sourceTree = "<group>"; };
+		5C8A748FEEFBD6A7F51030F0 /* LocalizationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
+		5D1040E2B67C80F79370D0CD /* AppRoute.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppRoute.swift; sourceTree = "<group>"; };
 		732798A21857C6B85A3A3573 /* TadSigningDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TadSigningDemo.entitlements; sourceTree = "<group>"; };
+		7764C7D3190E00D86C0DBD97 /* AppLanguage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
+		7A6FC43C0182ED52758A3894 /* PaymentViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaymentViewModel.swift; sourceTree = "<group>"; };
+		82D9ABA563D7D689E0FF9C7D /* RootViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
+		839E7AEEF263FEBE42A011CA /* PhoneView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		8B2E9C1B3922F00148343585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8FCA45E98FB5631477EBA337 /* PaymentCardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaymentCardView.swift; sourceTree = "<group>"; };
 		93F14A43CAA56F29F7C301B4 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
-		A4ED1955A10387A604ECB662 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9AEA91630408C61E9E695FC8 /* HomeViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		9CFDD8CA89216A64A1392462 /* PhoneViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PhoneViewModel.swift; sourceTree = "<group>"; };
+		A6A99B57A09B6B4AF3BA7281 /* Color+Brand.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Color+Brand.swift"; sourceTree = "<group>"; };
+		D53C0A499D32A1C386883F61 /* OTPViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OTPViewModel.swift; sourceTree = "<group>"; };
+		DD8E4EEF4499C4BF5A6DCB8C /* HomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E24D125E051681854C1A0685 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EB8662F675EB085900272923 /* SDKConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKConfig.swift; sourceTree = "<group>"; };
+		FB181DB1C101FCA317E50C3B /* PaymentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
+		FD1053E3856D89700AA32043 /* OTPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,13 +63,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52599A5E303416AC0012C177 /* TadSigningSDK.xcframework in Frameworks */,
+				F63A465C2EBB5A9537070553 /* TadSigningSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B3199796A6FEB767062C98A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FE954B31AAEFD066EF92F90F /* Root */,
+				D04F6BD4547861A894D914BC /* Phone */,
+				4004845E3F2854D3DA93827F /* OTP */,
+				CE3EB7FBDC96BDD4D7B74A41 /* Home */,
+				251D41BC33D315AB64BBF9F7 /* Payment */,
+				C1DD92ECC401E44DD682619A /* Shared */,
+			);
+			name = Views;
+			path = Views;
+			sourceTree = "<group>";
+		};
 		19481B89672E1D8984CF3E3C /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -47,21 +92,42 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		251D41BC33D315AB64BBF9F7 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				FB181DB1C101FCA317E50C3B /* PaymentView.swift */,
+				8FCA45E98FB5631477EBA337 /* PaymentCardView.swift */,
+			);
+			name = Payment;
+			path = Payment;
+			sourceTree = "<group>";
+		};
 		2F8FBEAF5B56D331BE75AABA /* TadSigningDemo */ = {
 			isa = PBXGroup;
 			children = (
 				93F14A43CAA56F29F7C301B4 /* App.swift */,
 				E24D125E051681854C1A0685 /* Assets.xcassets */,
-				A4ED1955A10387A604ECB662 /* ContentView.swift */,
 				8B2E9C1B3922F00148343585 /* Info.plist */,
-				4F0FAC1EC96AB67A1C2365EE /* LocalizationManager.swift */,
-				EB8662F675EB085900272923 /* SDKConfig.swift */,
 				732798A21857C6B85A3A3573 /* TadSigningDemo.entitlements */,
+				FAF620CDBEA73C400BC6CCDB /* Models */,
+				F47F6B4147CE07A424935714 /* ViewModels */,
+				AA5D4BA4D93A21C85E38ECFD /* Services */,
+				CACE4B39FA23BA15F89EA6B8 /* Theme */,
+				0B3199796A6FEB767062C98A /* Views */,
 			);
 			path = TadSigningDemo;
 			sourceTree = "<group>";
 		};
-		52599A59303347A20012C177 /* Frameworks */ = {
+		4004845E3F2854D3DA93827F /* OTP */ = {
+			isa = PBXGroup;
+			children = (
+				FD1053E3856D89700AA32043 /* OTPView.swift */,
+			);
+			name = OTP;
+			path = OTP;
+			sourceTree = "<group>";
+		};
+		520FA6EA30347F0B005F45EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -71,19 +137,90 @@
 		A37F2CF79CFDFCF961D2EDBF = {
 			isa = PBXGroup;
 			children = (
-				EB7DE747BDD6D0CDE579172D /* Packages */,
 				2F8FBEAF5B56D331BE75AABA /* TadSigningDemo */,
-				52599A59303347A20012C177 /* Frameworks */,
+				520FA6EA30347F0B005F45EF /* Frameworks */,
 				19481B89672E1D8984CF3E3C /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		EB7DE747BDD6D0CDE579172D /* Packages */ = {
+		AA5D4BA4D93A21C85E38ECFD /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				52599A5D303416950012C177 /* TadSigningSDK.xcframework */,
+				5C8A748FEEFBD6A7F51030F0 /* LocalizationManager.swift */,
+				5778800F0A205707F063FE29 /* SDKConfig.swift */,
 			);
-			name = Packages;
+			name = Services;
+			path = Services;
+			sourceTree = "<group>";
+		};
+		C1DD92ECC401E44DD682619A /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				194C7345CD1F665E659CB87F /* AABButton.swift */,
+				51CA67BC84F81DAAE6006D65 /* LanguageToggle.swift */,
+				448EBA95BA92ADDF322CD9F7 /* OTPBoxes.swift */,
+			);
+			name = Shared;
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		CACE4B39FA23BA15F89EA6B8 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				A6A99B57A09B6B4AF3BA7281 /* Color+Brand.swift */,
+			);
+			name = Theme;
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		CE3EB7FBDC96BDD4D7B74A41 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				DD8E4EEF4499C4BF5A6DCB8C /* HomeView.swift */,
+			);
+			name = Home;
+			path = Home;
+			sourceTree = "<group>";
+		};
+		D04F6BD4547861A894D914BC /* Phone */ = {
+			isa = PBXGroup;
+			children = (
+				839E7AEEF263FEBE42A011CA /* PhoneView.swift */,
+			);
+			name = Phone;
+			path = Phone;
+			sourceTree = "<group>";
+		};
+		F47F6B4147CE07A424935714 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				82D9ABA563D7D689E0FF9C7D /* RootViewModel.swift */,
+				9CFDD8CA89216A64A1392462 /* PhoneViewModel.swift */,
+				D53C0A499D32A1C386883F61 /* OTPViewModel.swift */,
+				9AEA91630408C61E9E695FC8 /* HomeViewModel.swift */,
+				7A6FC43C0182ED52758A3894 /* PaymentViewModel.swift */,
+			);
+			name = ViewModels;
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		FAF620CDBEA73C400BC6CCDB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7764C7D3190E00D86C0DBD97 /* AppLanguage.swift */,
+				5D1040E2B67C80F79370D0CD /* AppRoute.swift */,
+			);
+			name = Models;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FE954B31AAEFD066EF92F90F /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				117E2F09B1E1CA35A8C4B443 /* ContentView.swift */,
+			);
+			name = Root;
+			path = Root;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -103,6 +240,7 @@
 			);
 			name = TadSigningDemo;
 			packageProductDependencies = (
+				629F7C5F70485A232C5287C5 /* TadSigningSDK */,
 			);
 			productName = TadSigningDemo;
 			productReference = 2721F6047EE57EB6B6E454AB /* TadSigningDemo.app */;
@@ -127,7 +265,7 @@
 			mainGroup = A37F2CF79CFDFCF961D2EDBF;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				CA5B4C0502E9431DDA29242C /* XCLocalSwiftPackageReference "/Users/muhammad/Documents/Git/tad-core-signing-app/apps/tad-core-signing-ios" */,
+				4D6E4B8A3C2AA9FBA3984E88 /* XCRemoteSwiftPackageReference "TADI-SIGNING-IOS-SDK-BIN" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 19481B89672E1D8984CF3E3C /* Products */;
@@ -156,9 +294,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C388B2EA21F37C322C4509E /* App.swift in Sources */,
-				9019996BDF76E3AF26D3AC74 /* ContentView.swift in Sources */,
-				EEE4FC8F7118C56DC9B6DC2B /* LocalizationManager.swift in Sources */,
-				5B2F22F5115CC95AE0CFAF9B /* SDKConfig.swift in Sources */,
+				C921739378419747F7BCD910 /* AppLanguage.swift in Sources */,
+				3F482DFB332BBFBD46A117AC /* AppRoute.swift in Sources */,
+				1E06DCE1588414D9ACBA9D6F /* RootViewModel.swift in Sources */,
+				A70885527ED3CE67AAC9B6F8 /* PhoneViewModel.swift in Sources */,
+				3DF063452D21C3FC427D3B7C /* OTPViewModel.swift in Sources */,
+				0914B62C857904F1992AE67E /* HomeViewModel.swift in Sources */,
+				D41F985C2D8375C95BB26F02 /* PaymentViewModel.swift in Sources */,
+				1BA1803189EB1EC70C1CA7A9 /* LocalizationManager.swift in Sources */,
+				7E5B7ACE9E187C1B6D88B312 /* SDKConfig.swift in Sources */,
+				699AB4B0D658F172ED662C7E /* Color+Brand.swift in Sources */,
+				70FB9B09DDB40211CB4C92BB /* ContentView.swift in Sources */,
+				9BBEDF1B3749310049097AA3 /* PhoneView.swift in Sources */,
+				A3AFCEBBCD2B71DCA23C1A90 /* OTPView.swift in Sources */,
+				C21D7B8F32C33A13DD748193 /* HomeView.swift in Sources */,
+				F7750CC9D49FEFCFE3F09E32 /* PaymentView.swift in Sources */,
+				354915D2AA02AC3C3061B65A /* PaymentCardView.swift in Sources */,
+				FF8366EC250D4DB1CA3E9B48 /* AABButton.swift in Sources */,
+				86AEF479E4FAEB12F7F7AF91 /* LanguageToggle.swift in Sources */,
+				D7DEB6A6FEAF63BD7B882878 /* OTPBoxes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,12 +509,24 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		CA5B4C0502E9431DDA29242C /* XCLocalSwiftPackageReference "/Users/muhammad/Documents/Git/tad-core-signing-app/apps/tad-core-signing-ios" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "/Users/muhammad/Documents/Git/tad-core-signing-app/apps/tad-core-signing-ios";
+/* Begin XCRemoteSwiftPackageReference section */
+		4D6E4B8A3C2AA9FBA3984E88 /* XCRemoteSwiftPackageReference "TADI-SIGNING-IOS-SDK-BIN" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://gitlab.tadi.uz/tadi_public/TADI-SIGNING-IOS-SDK-BIN.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		629F7C5F70485A232C5287C5 /* TadSigningSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4D6E4B8A3C2AA9FBA3984E88 /* XCRemoteSwiftPackageReference "TADI-SIGNING-IOS-SDK-BIN" */;
+			productName = TadSigningSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 866CEB0B949B74B15DBA4393 /* Project object */;
 }
